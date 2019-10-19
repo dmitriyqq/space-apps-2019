@@ -5,7 +5,7 @@ import SimpleExample from './pages/map'
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className="App" style={{width: '100%', height: '100%'}}>
         <SimpleExample/>
     </div>
   );

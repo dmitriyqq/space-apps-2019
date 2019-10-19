@@ -8,10 +8,10 @@ type State = {
 }
 
 export default class SimpleExample extends Component<{}, State> {
-  state = {
+  state: State = {
     lat: 51.505,
     lng: -0.09,
-    zoom: 13,
+    zoom: 4,
   }
 
   render() {
