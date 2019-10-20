@@ -25,12 +25,15 @@ export class LeafletMap extends Component<IProps, State> {
   async componentDidMount() {
     const { cities } = await this.props.dataService.getCities();
     this.setState({cities})
+    this.handleViewportChange()
   }
+
+  map: any;
 
   render() {
     const position: [number, number] = [this.state.lat, this.state.lng]
     return (
-      <Map center={position} zoom={this.state.zoom}>
+      <Map ref={(ref) => { this.map = ref; }} center={position} zoom={this.state.zoom} onViewportChange={this.handleViewportChange}>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -43,9 +46,10 @@ export class LeafletMap extends Component<IProps, State> {
     )
   }
 
-  private handleViewportChange = (viewport: {center: [number, number], zoom: number}) => {
-      // if (!this.element) {
-      //   throw new Error("couldn't get map");
-      // }
+  private handleViewportChange = () => {
+      if (this.map && this.map.leafletElement) {
+        console.log(this.map.leafletElement.getBounds());
+        // console.log(this.map.getBounds())
+      }
   }
 }
