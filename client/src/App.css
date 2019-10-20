@@ -74,5 +74,29 @@
     left: 0;
     background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/172299/bubbles-mask.gif);
     mix-blend-mode: overlay;
-    opacity: 5;
+    opacity: 5;}
+
+.bad {
+  top: -15px;
+  left: -15px;
+  background-color: red;
+  border-radius: 100px;
+  width: 30px!important;
+  height: 30px!important;
+  margin: 0 0 0 0!important;
+  padding: 0 0 0 0!important;
+  opacity: 0.3;
+}
+
+
+.good {
+  top: -15px;
+  left: -15px;
+  background-color: blue;
+  border-radius: 100px;
+  width: 30px!important;
+  height: 30px!important;
+  margin: 0 0 0 0!important;
+  padding: 0 0 0 0!important;
+  opacity: 0.3;
 }

@@ -16,6 +16,7 @@ export class City {
     iso3: number = 0;
     lng: number = 0;
     lat: number = 0;
+    destroyed: boolean = false;
 }
 
 export class CitiesResponse{
@@ -24,5 +25,5 @@ export class CitiesResponse{
 
 export interface IDataService {
     getYears(): Promise<YearsResponse>;
-    getCities(): Promise<CitiesResponse>
+    getCitiesLevel(level: number, swlat: number, swlng: number, nelat: number, nelng: number): Promise<CitiesResponse> 
 }

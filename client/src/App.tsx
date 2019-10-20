@@ -3,30 +3,25 @@ import './App.css';
 import { LeafletMap } from './pages/Map'
 import { DataService } from './services/DataService';
 import Gorod from "./static/Gorod.svg"
-import { YearsResponse, CitiesResponse } from './interfaces/IDataService';
 
 interface IState {
-  years: YearsResponse;
-  cities: CitiesResponse;
+  lvl: number;
 }
 class App extends React.Component<{}, IState> {
+  constructor(props: any) {
+    super(props)
+    this.state = ({
+      lvl: 0
+    })
+  }
 
-  async componentDidMount() {
-    const dataservice = new DataService();
-    const years = await dataservice.getYears();
-    const cities = await dataservice.getCities();
-    this.setState(
-      {
-        years: years,
-        cities: cities,
-      }
-    );
-
-    ($(".js-range-slider") as any).ionRangeSlider({
+  componentDidMount() {
+    // const dataservice = new DataService();
+    ($(".js-range-slider-2") as any).ionRangeSlider({
       skin: "big",
-      min: 1880,
-      max: 2013,
-      from: 1880,
+      min: 0,
+      max: 100,
+      from: 0,
       step: 1,            // default 1 (set step)
       grid: true,         // default false (enable grid)
       grid_num: 10,        // default 4 (set number of grid cells)
@@ -35,14 +30,15 @@ class App extends React.Component<{}, IState> {
   }
 
   componentDidUpdate() {
-    ($(".js-range-slider") as any).ionRangeSlider({
+
+    ($(".js-range-slider-2") as any).ionRangeSlider({
       skin: "big",
-      min: 1880,
-      max: 2013,
-      from: 1880,
+      min: 0,
+      max: 100,
+      from: 0,
       step: 1,            // default 1 (set step)
       grid: true,         // default false (enable grid)
-      grid_num: 4,        // default 4 (set number of grid cells)
+      grid_num: 10,        // default 4 (set number of grid cells)
       grid_snap: false    // default false (snap grid to step)
     })
   }
@@ -57,17 +53,22 @@ class App extends React.Component<{}, IState> {
                 <img src={Gorod} className="gorod"></img>
               </div>
             </label>
-
           </div>
         </div>
         <div className="map">
-          <LeafletMap dataService={new DataService()} />
+          <LeafletMap dataService={new DataService()} lvl={this.state.lvl} />
         </div>
-        <div className="polzynok">
-          <input type="text" className="js-range-slider" name="my_range" />
+        <div className="polzynok" onClick={this.myfunc}>
+          <input type="number" className="js-range-slider-2" name="my_range"/>
         </div>
       </div>
     );
+  }
+  myfunc = () => {
+    const a = Number($(".irs-single")[0].innerText)
+    this.setState({
+      lvl: a
+    })
   }
 }
 
