@@ -24,7 +24,7 @@ def send_cities_in_rect():
     nelng = t['nelng']
     level = t['level']
     print(((level, swlng, swlat, swlng, nelat, nelng, nelat, nelng, swlat, swlng, swlat)))
-    cur.execute("SELECT id, name, country, elevation, population, ST_X(C.pos::geometry) as lng, ST_Y(C.pos::geometry) as lat, (CASE WHEN elevation > %s THEN 0 ELSE 1 END) as destroyed FROM cities C WHERE ST_Contains(ST_GEOMFROMTEXT('SRID=4326;POLYGON((%s %s, %s %s, %s %s, %s %s, %s %s))'), C.pos::geometry) order by population LIMIT 500;", (level, swlng, swlat, swlng, nelat, nelng, nelat, nelng, swlat, swlng, swlat))
+    cur.execute("SELECT id, name, country, elevation, population, ST_X(C.pos::geometry) as lng, ST_Y(C.pos::geometry) as lat, (CASE WHEN elevation > %s THEN 0 ELSE 1 END) as destroyed FROM cities C WHERE ST_Contains(ST_GEOMFROMTEXT('SRID=4326;POLYGON((%s %s, %s %s, %s %s, %s %s, %s %s))'), C.pos::geometry) order by population LIMIT 2000;", (level, swlng, swlat, swlng, nelat, nelng, nelat, nelng, swlat, swlng, swlat))
     df = cur.fetchall()
     cur.close()
     return return_companies(df)

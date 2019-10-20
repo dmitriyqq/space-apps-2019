@@ -18,6 +18,7 @@ type State = {
 
 interface IProps {
   dataService: IDataService;
+  onClick: (city: City) => void;
 }
 
 export class LeafletMap extends Component<IProps, State> {
@@ -36,13 +37,11 @@ export class LeafletMap extends Component<IProps, State> {
 
   render() {
 
-    const maxZoom = 10;
-    const zoom = Math.min(maxZoom, this.state.zoom);
-
-    console.log(goodicon, badicon);
+    const minZoom = 10;
+    const zoom = Math.max(minZoom, this.state.zoom);
     const position: [number, number] = [this.state.lat, this.state.lng]
     return (
-      <Map ref={(ref) => { this.map = ref; }} center={position} zoom={10} onViewportChange={this.handleViewportChange}>
+      <Map onClick={this.handleClick} ref={(ref) => { this.map = ref; }} center={position} zoom={7} onViewportChange={this.handleViewportChange}>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -55,7 +54,34 @@ export class LeafletMap extends Component<IProps, State> {
     )
   }
 
-  private handleViewportChange = () => {
+  private handleClick = (e: any) => {
+    let n = null;
+    let min = 0.1;
+    console.log(e);
+    const latlng = e.latlng;
+    const lat = latlng.lat;
+    const lng = latlng.lng;
+
+    for (const city of this.state.cities) {
+      const dx = city.lat - lat;
+      const dy = city.lng - lng;
+
+      const v = dx * dx + dy*dy;
+      if (v < min) {
+        n = city;
+        min = v;
+      }
+
+    }
+
+    console.log(min);
+    if (n != null) {
+      this.props.onClick(n);
+    }
+  }
+
+  private handleViewportChange = (viewport: any) => {
+    this.setState({zoom: Math.max(10, viewport.zoom)})
     this.updateCities();
   }
 
