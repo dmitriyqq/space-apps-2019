@@ -14,9 +14,14 @@ export class DataService implements IDataService{
         }
     }
 
-    public async getCities(): Promise<CitiesResponse> {
+    public async getCitiesLevel(level: number, swlat: number, swlng: number, nelat: number, nelng: number): Promise<CitiesResponse> {
         try {
-            var resp = await fetch(`${this.base}/cities2`);
+            var resp = await fetch(`${this.base}/cities_below_level`, {method: 'POST', headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              },body : JSON.stringify({
+                level, swlat, swlng, nelat, nelng
+            })});
             var json = await resp.json();
             return json as CitiesResponse;
         } catch (error){
