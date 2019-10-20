@@ -8,6 +8,7 @@ CORS(app)
 
 cities_data = pd.read_csv('cities_data.csv')
 sea_level = pd.read_csv('sea_level.csv', index_col=False)
+conn = psycopg2.connect(dbname='postgres',user='postgres',host='localhost',password='mysecretpassword')
 
 print(sea_level.head(4))
 levels = sea_level[['year', 'level']]
@@ -26,7 +27,7 @@ def send_cities():
 def send_cities2():
     lst = []
     cur = conn.cursor()
-    cur.execute("SELECT id, name, country, elevation, population, ST_X(C.pos::geometry) as lng, ST_Y(C.pos::geometry) as lat FROM public.cities C where population > 10000")
+    cur.execute("SELECT id, name, country, elevation, population, ST_X(C.pos::geometry) as lng, ST_Y(C.pos::geometry) as lat FROM public.cities C where population > 400000")
     df = cur.fetchall()
     for row in df:
         id, name, country, elevation, population, lng, lat = row;
@@ -37,11 +38,10 @@ def send_cities2():
             'elevation': elevation,
             'population': population,
             'lng': lng,
-            'lat': lat))
+            'lat': lat})
     cur.close()
 
     return jsonify({'cities': lst})
-
 
 @app.route('/years')
 def send_years():
