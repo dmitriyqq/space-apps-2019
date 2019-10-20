@@ -1,7 +1,10 @@
 from flask import Flask, request, redirect, url_for, send_from_directory, jsonify
 import pandas as pd
+import psycopg2
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 cities_data = pd.read_csv('cities_data.csv')
 sea_level = pd.read_csv('sea_level.csv', index_col=False)
@@ -18,6 +21,27 @@ def send_cities():
         lst.append((city, lat, lng, int(elevation)))
 
     return jsonify({'cities': lst})
+
+@app.route('/cities2')
+def send_cities2():
+    lst = []
+    cur = conn.cursor()
+    cur.execute("SELECT id, name, country, elevation, population, ST_X(C.pos::geometry) as lng, ST_Y(C.pos::geometry) as lat FROM public.cities C where population > 10000")
+    df = cur.fetchall()
+    for row in df:
+        id, name, country, elevation, population, lng, lat = row;
+        lst.append({
+            'id': id,
+            'name': name,
+            'country': country,
+            'elevation': elevation,
+            'population': population,
+            'lng': lng,
+            'lat': lat))
+    cur.close()
+
+    return jsonify({'cities': lst})
+
 
 @app.route('/years')
 def send_years():
