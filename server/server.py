@@ -8,7 +8,7 @@ CORS(app)
 
 # cities_data = pd.read_csv('cities_data.csv')
 sea_level = pd.read_csv('sea_level.csv', index_col=False)
-conn = psycopg2.connect(dbname='postgres',user='postgres',host='localhost',password='mysecretpassword')
+conn = psycopg2.connect(dbname='postgres',user='postgres',host='192.168.14.144',password='mysecretpassword')
 
 print(sea_level.head(4))
 levels = sea_level[['year', 'level']]

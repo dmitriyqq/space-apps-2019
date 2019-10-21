@@ -19,6 +19,7 @@ type State = {
 interface IProps {
   dataService: IDataService;
   onClick: (city: City) => void;
+  lvl: number;
 }
 
 export class LeafletMap extends Component<IProps, State> {
@@ -33,10 +34,18 @@ export class LeafletMap extends Component<IProps, State> {
     this.updateCities();
   }
 
+  shouldComponentUpdate = (nextProps: any, _: any) => {
+    if (this.props.lvl != nextProps.lvl) {
+      this.updateCities();
+      return true;
+    }
+
+    return true;
+  }
+
   map: any;
 
   render() {
-
     const minZoom = 10;
     const zoom = Math.max(minZoom, this.state.zoom);
     const position: [number, number] = [this.state.lat, this.state.lng]
@@ -87,13 +96,12 @@ export class LeafletMap extends Component<IProps, State> {
 
   private updateCities = async () => {
     if (this.map && this.map.leafletElement) {
-      console.log();
       try {
       const bounds = this.map.leafletElement.getBounds();
 
       
       const { cities } = await this.props.dataService.getCitiesLevel(
-        100, bounds._southWest.lat, bounds._southWest.lng , bounds._northEast.lat, bounds._northEast.lng);
+        this.props.lvl, bounds._southWest.lat, bounds._southWest.lng , bounds._northEast.lat, bounds._northEast.lng);
       
       this.setState(() => ({ cities }))
       } catch(error) {
