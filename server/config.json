@@ -1,0 +1,7 @@
+{
+    "dbname": "postgres",
+    "user": "postgres",
+    "host": "database",
+    "pwd": "mysecretpassword",
+    "serv_host": "0.0.0.0"
+}

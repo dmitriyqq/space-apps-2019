@@ -1,7 +1,7 @@
 import {YearsResponse, IDataService, CitiesResponse} from '../interfaces/IDataService'
 
 export class DataService implements IDataService{
-    base: string = 'http://localhost:5000'
+    base: string = 'http://127.0.0.1:5000'
 
     public async getYears(): Promise<YearsResponse> {
         try {

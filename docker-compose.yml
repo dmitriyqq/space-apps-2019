@@ -3,6 +3,16 @@ services:
   database:
     image: mdillon/postgis
     environment:
-    - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_PASSWORD=mysecretpassword
     ports:
-    - 5432:5432
+      - 5432:5432
+  server:
+    image: spaceapps
+    ports:
+      - 5000:5000
+    volumes:
+      - ./server/config.json:/app/config.json
+    links:
+      - database
+    depends_on:
+      - database
