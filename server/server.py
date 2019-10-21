@@ -1,7 +1,6 @@
 from flask import Flask, request, redirect, url_for, send_from_directory, jsonify
 import pandas as pd
 import psycopg2
-from flask_cors import CORS
 import math
 
 from json import load
@@ -11,7 +10,7 @@ from os.path import split as path_split
 config = load(open(abspath(path_join(path_split(__file__)[0], 'config.json'))))
 
 app = Flask(__name__)
-CORS(app)
+app
 
 # cities_data = pd.read_csv('cities_data.csv')
 # sea_level = pd.read_csv('sea_level.csv', index_col=False)
