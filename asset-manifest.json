@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/spaceapps2019/static/css/main.89ef7d4d.chunk.css",
-    "main.js": "/spaceapps2019/static/js/main.ef7023c6.chunk.js",
-    "main.js.map": "/spaceapps2019/static/js/main.ef7023c6.chunk.js.map",
-    "runtime-main.js": "/spaceapps2019/static/js/runtime-main.9ec96281.js",
-    "runtime-main.js.map": "/spaceapps2019/static/js/runtime-main.9ec96281.js.map",
-    "static/js/2.0e8044d0.chunk.js": "/spaceapps2019/static/js/2.0e8044d0.chunk.js",
-    "static/js/2.0e8044d0.chunk.js.map": "/spaceapps2019/static/js/2.0e8044d0.chunk.js.map",
-    "index.html": "/spaceapps2019/index.html",
-    "precache-manifest.29211390aaa27d142bc182236560d850.js": "/spaceapps2019/precache-manifest.29211390aaa27d142bc182236560d850.js",
-    "service-worker.js": "/spaceapps2019/service-worker.js",
-    "static/css/main.89ef7d4d.chunk.css.map": "/spaceapps2019/static/css/main.89ef7d4d.chunk.css.map",
-    "static/media/Gorod.svg": "/spaceapps2019/static/media/Gorod.2c8efb48.svg",
-    "static/media/logo.svg": "/spaceapps2019/static/media/logo.25bf045c.svg"
+    "main.css": "/space-apps-2019/static/css/main.89ef7d4d.chunk.css",
+    "main.js": "/space-apps-2019/static/js/main.56d3c91e.chunk.js",
+    "main.js.map": "/space-apps-2019/static/js/main.56d3c91e.chunk.js.map",
+    "runtime-main.js": "/space-apps-2019/static/js/runtime-main.9f8e9b5f.js",
+    "runtime-main.js.map": "/space-apps-2019/static/js/runtime-main.9f8e9b5f.js.map",
+    "static/js/2.0e8044d0.chunk.js": "/space-apps-2019/static/js/2.0e8044d0.chunk.js",
+    "static/js/2.0e8044d0.chunk.js.map": "/space-apps-2019/static/js/2.0e8044d0.chunk.js.map",
+    "index.html": "/space-apps-2019/index.html",
+    "precache-manifest.3caaca30a4c99978b0cb711cc0d6b8b4.js": "/space-apps-2019/precache-manifest.3caaca30a4c99978b0cb711cc0d6b8b4.js",
+    "service-worker.js": "/space-apps-2019/service-worker.js",
+    "static/css/main.89ef7d4d.chunk.css.map": "/space-apps-2019/static/css/main.89ef7d4d.chunk.css.map",
+    "static/media/Gorod.svg": "/space-apps-2019/static/media/Gorod.2c8efb48.svg",
+    "static/media/logo.svg": "/space-apps-2019/static/media/logo.25bf045c.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9ec96281.js",
+    "static/js/runtime-main.9f8e9b5f.js",
     "static/js/2.0e8044d0.chunk.js",
     "static/css/main.89ef7d4d.chunk.css",
-    "static/js/main.ef7023c6.chunk.js"
+    "static/js/main.56d3c91e.chunk.js"
   ]
 }
