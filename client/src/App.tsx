@@ -103,7 +103,7 @@ class App extends React.Component<{}, IState> {
         <div className="map">
           <LeafletMap onClick={this.handleClick} lvl={this.state.lvl} needMapUpdate={this.fetchCities} cities={this.state.cities}/>
         </div>
-        <div style={{width: `${(window.innerWidth - 350 || 850) - 350}px`}}className="polzynok" onClick={this.myfunc}>
+        <div style={{width: `${(window.innerWidth || 850) - 350}px`}}className="polzynok" onClick={this.myfunc}>
           <input type="number" className="js-range-slider-2" name="my_range"/>
         </div>
       </div>
