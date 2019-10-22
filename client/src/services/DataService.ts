@@ -1,7 +1,7 @@
-import {YearsResponse, IDataService, CitiesResponse} from '../interfaces/IDataService'
+import {YearsResponse, IDataService, CitiesResponse, OverviewResponse} from '../interfaces/IDataService'
 
 export class DataService implements IDataService{
-    base: string = 'https://shulaikin.tech:5000'
+    base: string = 'http://localhost:5000';
 
     public async getYears(): Promise<YearsResponse> {
         try {
@@ -27,6 +27,22 @@ export class DataService implements IDataService{
         } catch (error){
             console.error(error);
             return new CitiesResponse();
+        }
+    }
+
+    public async getCitiesOverview(level: number): Promise<OverviewResponse> {
+        try {
+            var resp = await fetch(`${this.base}/total_cities_below_level`, {method: 'POST', headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              },body : JSON.stringify({
+                level
+            })});
+            var json = await resp.json();
+            return json as OverviewResponse;
+        } catch (error){
+            console.error(error);
+            return new OverviewResponse();
         }
     }
 }

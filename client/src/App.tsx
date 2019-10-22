@@ -3,19 +3,37 @@ import './App.css';
 import { LeafletMap } from './pages/Map'
 import { DataService } from './services/DataService';
 import Gorod from "./static/Gorod.svg"
-import { City } from './interfaces/IDataService';
+import { City, IDataService, OverviewResponse } from './interfaces/IDataService';
 
 interface IState {
   lvl: number;
   city: City | null;
+  cities: City[];
+  swlat: number;
+  swlng: number;
+  nelat: number;
+  nelng: number;
+  overview: OverviewResponse;
 }
+
 class App extends React.Component<{}, IState> {
+  dataService: IDataService | null = null;
+  timeout : NodeJS.Timeout | null = null;
+
   constructor(props: any) {
     super(props)
     this.state = ({
       lvl: 0,
       city: null,
+      cities: [],
+      swlat: 0,
+      swlng: 0,
+      nelat: 0,
+      nelng: 0,
+      overview: new OverviewResponse()
     })
+
+    this.dataService = new DataService();
   }
 
   private handleClick = (city: City) => {
@@ -53,17 +71,26 @@ class App extends React.Component<{}, IState> {
   render() {
 
     let s = null;
-    if (this.state.city != null) { 
+    let city = this.state.city || ( this.state.cities && this.state.cities.length > 0 && this.state.cities[0]);
+
+    if (city) { 
       s = <div className="smallStakan">
         <label className="lab">
-          <div className="fil" id="fill" style={{ height: `${Math.min(100 - (Math.max(this.state.city.elevation, 0) - this.state.lvl) / Math.max(this.state.city.elevation, 1) * 100, 100)}%` }}>
-            
-            
+          <div className="fil" id="fill" style={{ height: `${Math.min(100 - (Math.max(city.elevation, 0) - this.state.lvl) / Math.max(city.elevation, 1) * 100, 100)}%` }}>
           </div>
         </label>
-        <h1>{this.state.city.name}</h1>
-        <h2>{this.state.city.population} чел.</h2>
-        <h2>{this.state.city.elevation} м</h2>
+        <h1>{city.name}</h1>
+        <h4>City population: </h4>
+        <h5>{city.population == 0 ? '<no-info>' : `${Math.round(city.population)} people`}</h5>
+        <h4>City elevation: {city.elevation}m</h4>
+        <h4>Cities affected: {this.state.overview.cities}</h4>
+        <h4>People affected</h4>
+        <h5>{this.state.overview.people == 0 ? '<no-info>' : `${Math.round(this.state.overview.people)} people`}</h5>
+        <h4>Major cities affected:</h4>
+        <ul style={{padding: 0}}> 
+          {this.state.overview.list.cities.map(c => <li>{c.name} - {c.population} people</li>).filter((_, i) => i < 5)}
+        </ul>
+        <h2>Sea level: {this.state.lvl} m</h2>
         <img src={Gorod} className="gorod"></img>
       </div>
     }
@@ -74,18 +101,36 @@ class App extends React.Component<{}, IState> {
           {s}
         </div>
         <div className="map">
-          <LeafletMap onClick={this.handleClick} dataService={new DataService()} lvl={this.state.lvl} />
+          <LeafletMap onClick={this.handleClick} lvl={this.state.lvl} needMapUpdate={this.fetchCities} cities={this.state.cities}/>
         </div>
-        <div className="polzynok" onClick={this.myfunc}>
+        <div style={{width: `${window.innerWidth || 500}px`}}className="polzynok" onClick={this.myfunc}>
           <input type="number" className="js-range-slider-2" name="my_range"/>
         </div>
       </div>
     );
   }
+
+  fetchCities = async (swlat: number, swlng: number, nelat: number, nelng: number) => {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+
+    this.timeout = setTimeout(async () => {
+      const { cities } = await this.dataService!.getCitiesLevel(this.state.lvl, swlat, swlng , nelat, nelng);
+      const overview = await this.dataService!.getCitiesOverview(this.state.lvl);
+      console.log(overview)
+      this.setState(() => ({ cities, swlat, swlng, nelat, nelng, overview}));
+    }, 300);
+    
+  }
+
   myfunc = () => {
     const a = Number($(".irs-single")[0].innerText)
-    this.setState({
+    this.setState(() => ({
       lvl: a
+    }), () => {
+      const { swlat, swlng, nelat, nelng} = this.state
+      this.fetchCities(swlat, swlng, nelat, nelng)
     })
   }
 }

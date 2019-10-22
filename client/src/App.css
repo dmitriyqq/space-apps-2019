@@ -13,7 +13,7 @@
   right: 0;
   width: 300px;
   height: 100%;
-  background-color: #EEE0E5;
+  background-color: rgb(237, 248, 250);
   display: flex;
   justify-content: center;
 }
@@ -23,7 +23,6 @@
   bottom: 0;
   left: 0;
   height: 10%;
-  width: 1550px;
   position: absolute;
 }
 

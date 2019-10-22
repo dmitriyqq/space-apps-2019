@@ -23,7 +23,14 @@ export class CitiesResponse{
     cities: City[] = [];
 }
 
+export class OverviewResponse {
+    cities: number = 0;
+    people: number = 0;
+    list: {cities: City[] } = { cities: []};
+}
+
 export interface IDataService {
     getYears(): Promise<YearsResponse>;
     getCitiesLevel(level: number, swlat: number, swlng: number, nelat: number, nelng: number): Promise<CitiesResponse> 
+    getCitiesOverview(level: number): Promise<OverviewResponse>
 }
