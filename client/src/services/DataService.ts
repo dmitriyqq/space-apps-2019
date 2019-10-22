@@ -1,7 +1,7 @@
 import {YearsResponse, IDataService, CitiesResponse, OverviewResponse} from '../interfaces/IDataService'
 
 export class DataService implements IDataService{
-    base: string = 'http://localhost:5000';
+    base: string = 'https://shulaikin.tech:5000';
 
     public async getYears(): Promise<YearsResponse> {
         try {
