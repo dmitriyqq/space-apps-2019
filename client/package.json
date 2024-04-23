@@ -46,7 +46,7 @@
     "@types/jquery": "^3.3.31",
     "@types/react-leaflet": "^2.4.0",
     "@types/recompose": "^0.30.7",
-    "gh-pages": "^2.1.1"
+    "gh-pages": "^5.0.0"
   },
   "homepage": "http://dmitriyqq.github.io/space-apps-2019"
 }
